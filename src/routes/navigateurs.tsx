@@ -53,15 +53,22 @@ interface OpenWindow {
 
 function BrowsersPage() {
   const queryClient = useQueryClient();
+  const { person } = useSession();
+  const personId = person?.id ?? null;
   const { url: incoming } = Route.useSearch();
   const [label, setLabel] = useState("");
   const [url, setUrl] = useState("");
   const [open, setOpen] = useState<OpenWindow | null>(null);
 
   const { data: browsers = [] } = useQuery({
-    queryKey: ["browsers"],
+    queryKey: ["browsers", personId],
+    enabled: Boolean(personId),
     queryFn: async () => {
-      const { data, error } = await supabase.from("browsers").select("*").order("created_at");
+      const { data, error } = await supabase
+        .from("browsers")
+        .select("*")
+        .eq("person_id", personId!)
+        .order("created_at");
       if (error) throw error;
       return (data ?? []) as BrowserTab[];
     },
