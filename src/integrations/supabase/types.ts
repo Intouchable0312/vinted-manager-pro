@@ -14,7 +14,191 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      browsers: {
+        Row: {
+          created_at: string
+          icon_url: string | null
+          id: string
+          label: string
+          url: string
+        }
+        Insert: {
+          created_at?: string
+          icon_url?: string | null
+          id?: string
+          label: string
+          url: string
+        }
+        Update: {
+          created_at?: string
+          icon_url?: string | null
+          id?: string
+          label?: string
+          url?: string
+        }
+        Relationships: []
+      }
+      face_photos: {
+        Row: {
+          created_at: string
+          descriptor: Json | null
+          file_name: string
+          id: string
+          image_url: string
+          person_id: string
+        }
+        Insert: {
+          created_at?: string
+          descriptor?: Json | null
+          file_name: string
+          id?: string
+          image_url: string
+          person_id: string
+        }
+        Update: {
+          created_at?: string
+          descriptor?: Json | null
+          file_name?: string
+          id?: string
+          image_url?: string
+          person_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "face_photos_person_id_fkey"
+            columns: ["person_id"]
+            isOneToOne: false
+            referencedRelation: "people"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      messages: {
+        Row: {
+          content: string
+          created_at: string
+          id: string
+          person_id: string
+        }
+        Insert: {
+          content: string
+          created_at?: string
+          id?: string
+          person_id: string
+        }
+        Update: {
+          content?: string
+          created_at?: string
+          id?: string
+          person_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "messages_person_id_fkey"
+            columns: ["person_id"]
+            isOneToOne: false
+            referencedRelation: "people"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      people: {
+        Row: {
+          created_at: string
+          id: string
+          is_admin: boolean
+          name: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          is_admin?: boolean
+          name: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          is_admin?: boolean
+          name?: string
+        }
+        Relationships: []
+      }
+      products: {
+        Row: {
+          created_at: string
+          id: string
+          image_url: string
+          person_id: string | null
+          title: string
+          url: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          image_url: string
+          person_id?: string | null
+          title: string
+          url: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          image_url?: string
+          person_id?: string | null
+          title?: string
+          url?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "products_person_id_fkey"
+            columns: ["person_id"]
+            isOneToOne: false
+            referencedRelation: "people"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      transactions: {
+        Row: {
+          amount: number
+          category: string
+          created_at: string
+          id: string
+          kind: string
+          label: string
+          occurred_on: string
+          person_id: string
+        }
+        Insert: {
+          amount: number
+          category?: string
+          created_at?: string
+          id?: string
+          kind: string
+          label: string
+          occurred_on?: string
+          person_id: string
+        }
+        Update: {
+          amount?: number
+          category?: string
+          created_at?: string
+          id?: string
+          kind?: string
+          label?: string
+          occurred_on?: string
+          person_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "transactions_person_id_fkey"
+            columns: ["person_id"]
+            isOneToOne: false
+            referencedRelation: "people"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
