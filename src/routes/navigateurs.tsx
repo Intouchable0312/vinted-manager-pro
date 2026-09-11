@@ -16,6 +16,7 @@ import {
 
 import { AppShell } from "@/components/AppShell";
 import { supabase } from "@/integrations/supabase/client";
+import { useSession } from "@/lib/session";
 import { faviconFor, hostOf, proxyUrl, type BrowserTab } from "@/lib/data";
 
 export const Route = createFileRoute("/navigateurs")({
