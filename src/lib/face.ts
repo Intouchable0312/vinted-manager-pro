@@ -58,7 +58,7 @@ export function loadImage(url: string): Promise<HTMLImageElement> {
 export function euclideanDistance(a: number[], b: number[]): number {
   let total = 0;
   for (let i = 0; i < a.length; i += 1) {
-    const diff = a[i] - b[i];
+    const diff = (a[i] ?? 0) - (b[i] ?? 0);
     total += diff * diff;
   }
   return Math.sqrt(total);
