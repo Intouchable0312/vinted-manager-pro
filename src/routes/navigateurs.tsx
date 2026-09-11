@@ -99,17 +99,21 @@ function BrowsersPage() {
       setLabel("");
       setUrl("");
       toast.success("Fenêtre créée");
-      queryClient.invalidateQueries({ queryKey: ["browsers"] });
+      queryClient.invalidateQueries({ queryKey: ["browsers", personId] });
     },
     onError: () => toast.error("Adresse invalide"),
   });
 
   const remove = useMutation({
     mutationFn: async (id: string) => {
-      const { error } = await supabase.from("browsers").delete().eq("id", id);
+      const { error } = await supabase
+        .from("browsers")
+        .delete()
+        .eq("id", id)
+        .eq("person_id", personId!);
       if (error) throw error;
     },
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["browsers"] }),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["browsers", personId] }),
   });
 
   return (
