@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AccueilRouteImport } from './routes/accueil'
 import { Route as MessagerieRouteImport } from './routes/messagerie'
+import { Route as NavigateursRouteImport } from './routes/navigateurs'
 import { Route as ApiPublicProxyRouteImport } from './routes/api/public/proxy'
 
 const IndexRoute = IndexRouteImport.update({
@@ -29,6 +30,11 @@ const MessagerieRoute = MessagerieRouteImport.update({
   path: '/messagerie',
   getParentRoute: () => rootRouteImport,
 } as any)
+const NavigateursRoute = NavigateursRouteImport.update({
+  id: '/navigateurs',
+  path: '/navigateurs',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiPublicProxyRoute = ApiPublicProxyRouteImport.update({
   id: '/api/public/proxy',
   path: '/api/public/proxy',
@@ -39,12 +45,14 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/accueil': typeof AccueilRoute
   '/messagerie': typeof MessagerieRoute
+  '/navigateurs': typeof NavigateursRoute
   '/api/public/proxy': typeof ApiPublicProxyRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/accueil': typeof AccueilRoute
   '/messagerie': typeof MessagerieRoute
+  '/navigateurs': typeof NavigateursRoute
   '/api/public/proxy': typeof ApiPublicProxyRoute
 }
 export interface FileRoutesById {
@@ -52,20 +60,29 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/accueil': typeof AccueilRoute
   '/messagerie': typeof MessagerieRoute
+  '/navigateurs': typeof NavigateursRoute
   '/api/public/proxy': typeof ApiPublicProxyRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/accueil' | '/messagerie' | '/api/public/proxy'
+  fullPaths:
+    '/' | '/accueil' | '/messagerie' | '/navigateurs' | '/api/public/proxy'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/accueil' | '/messagerie' | '/api/public/proxy'
-  id: '__root__' | '/' | '/accueil' | '/messagerie' | '/api/public/proxy'
+  to: '/' | '/accueil' | '/messagerie' | '/navigateurs' | '/api/public/proxy'
+  id:
+    | '__root__'
+    | '/'
+    | '/accueil'
+    | '/messagerie'
+    | '/navigateurs'
+    | '/api/public/proxy'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AccueilRoute: typeof AccueilRoute
   MessagerieRoute: typeof MessagerieRoute
+  NavigateursRoute: typeof NavigateursRoute
   ApiPublicProxyRoute: typeof ApiPublicProxyRoute
 }
 
@@ -92,6 +109,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MessagerieRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/navigateurs': {
+      id: '/navigateurs'
+      path: '/navigateurs'
+      fullPath: '/navigateurs'
+      preLoaderRoute: typeof NavigateursRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/public/proxy': {
       id: '/api/public/proxy'
       path: '/api/public/proxy'
@@ -106,6 +130,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AccueilRoute: AccueilRoute,
   MessagerieRoute: MessagerieRoute,
+  NavigateursRoute: NavigateursRoute,
   ApiPublicProxyRoute: ApiPublicProxyRoute,
 }
 export const routeTree = rootRouteImport
