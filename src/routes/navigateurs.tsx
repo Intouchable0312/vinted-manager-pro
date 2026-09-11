@@ -84,9 +84,11 @@ function BrowsersPage() {
     mutationFn: async () => {
       const raw = url.trim();
       if (!raw) throw new Error("Indique une adresse.");
+      if (!personId) throw new Error("Session introuvable.");
       const normalized = raw.startsWith("http") ? raw : `https://${raw}`;
       const parsed = new URL(normalized);
       const { error } = await supabase.from("browsers").insert({
+        person_id: personId,
         label: label.trim() || hostOf(normalized),
         url: parsed.toString(),
         icon_url: faviconFor(normalized, 256),
