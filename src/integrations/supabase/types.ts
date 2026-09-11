@@ -20,6 +20,7 @@ export type Database = {
           icon_url: string | null
           id: string
           label: string
+          person_id: string | null
           url: string
         }
         Insert: {
@@ -27,6 +28,7 @@ export type Database = {
           icon_url?: string | null
           id?: string
           label: string
+          person_id?: string | null
           url: string
         }
         Update: {
@@ -34,9 +36,18 @@ export type Database = {
           icon_url?: string | null
           id?: string
           label?: string
+          person_id?: string | null
           url?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "browsers_person_id_fkey"
+            columns: ["person_id"]
+            isOneToOne: false
+            referencedRelation: "people"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       face_photos: {
         Row: {

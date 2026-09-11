@@ -16,6 +16,7 @@ import {
 
 import { AppShell } from "@/components/AppShell";
 import { supabase } from "@/integrations/supabase/client";
+import { useSession } from "@/lib/session";
 import { faviconFor, hostOf, proxyUrl, type BrowserTab } from "@/lib/data";
 
 export const Route = createFileRoute("/navigateurs")({
@@ -52,15 +53,22 @@ interface OpenWindow {
 
 function BrowsersPage() {
   const queryClient = useQueryClient();
+  const { person } = useSession();
+  const personId = person?.id ?? null;
   const { url: incoming } = Route.useSearch();
   const [label, setLabel] = useState("");
   const [url, setUrl] = useState("");
   const [open, setOpen] = useState<OpenWindow | null>(null);
 
   const { data: browsers = [] } = useQuery({
-    queryKey: ["browsers"],
+    queryKey: ["browsers", personId],
+    enabled: Boolean(personId),
     queryFn: async () => {
-      const { data, error } = await supabase.from("browsers").select("*").order("created_at");
+      const { data, error } = await supabase
+        .from("browsers")
+        .select("*")
+        .eq("person_id", personId!)
+        .order("created_at");
       if (error) throw error;
       return (data ?? []) as BrowserTab[];
     },
@@ -76,9 +84,11 @@ function BrowsersPage() {
     mutationFn: async () => {
       const raw = url.trim();
       if (!raw) throw new Error("Indique une adresse.");
+      if (!personId) throw new Error("Session introuvable.");
       const normalized = raw.startsWith("http") ? raw : `https://${raw}`;
       const parsed = new URL(normalized);
       const { error } = await supabase.from("browsers").insert({
+        person_id: personId,
         label: label.trim() || hostOf(normalized),
         url: parsed.toString(),
         icon_url: faviconFor(normalized, 256),
@@ -89,17 +99,21 @@ function BrowsersPage() {
       setLabel("");
       setUrl("");
       toast.success("Fenêtre créée");
-      queryClient.invalidateQueries({ queryKey: ["browsers"] });
+      queryClient.invalidateQueries({ queryKey: ["browsers", personId] });
     },
     onError: () => toast.error("Adresse invalide"),
   });
 
   const remove = useMutation({
     mutationFn: async (id: string) => {
-      const { error } = await supabase.from("browsers").delete().eq("id", id);
+      const { error } = await supabase
+        .from("browsers")
+        .delete()
+        .eq("id", id)
+        .eq("person_id", personId!);
       if (error) throw error;
     },
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["browsers"] }),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["browsers", personId] }),
   });
 
   return (
