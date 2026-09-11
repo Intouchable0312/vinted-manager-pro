@@ -4,5 +4,4 @@
 
 [build.environment]
   NODE_VERSION = "22"
-  NITRO_PRESET = "netlify"
-  NPM_FLAGS = "--version"
+  BUN_VERSION = "1.2.19"
