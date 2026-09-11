@@ -20,7 +20,7 @@ import { faviconFor, hostOf, proxyUrl, type BrowserTab } from "@/lib/data";
 
 export const Route = createFileRoute("/navigateurs")({
   validateSearch: (search: Record<string, unknown>) => ({
-    url: typeof search.url === "string" ? search.url : undefined,
+    url: typeof search['url'] === "string" ? (search['url'] as string) : undefined,
   }),
   head: () => ({
     meta: [
