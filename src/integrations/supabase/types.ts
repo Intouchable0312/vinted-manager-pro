@@ -84,6 +84,41 @@ export type Database = {
           },
         ]
       }
+      mailboxes: {
+        Row: {
+          address: string
+          created_at: string
+          id: string
+          label: string | null
+          password: string
+          person_id: string | null
+        }
+        Insert: {
+          address: string
+          created_at?: string
+          id?: string
+          label?: string | null
+          password: string
+          person_id?: string | null
+        }
+        Update: {
+          address?: string
+          created_at?: string
+          id?: string
+          label?: string | null
+          password?: string
+          person_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "mailboxes_person_id_fkey"
+            columns: ["person_id"]
+            isOneToOne: false
+            referencedRelation: "people"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       messages: {
         Row: {
           content: string
