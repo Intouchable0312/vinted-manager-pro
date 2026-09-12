@@ -9,6 +9,7 @@ import {
   LogOut,
   MessageCircle,
   UserPlus,
+  Wand2,
   X,
 } from "lucide-react";
 
@@ -22,6 +23,7 @@ const TABS = [
   { to: "/messagerie", label: "Messagerie", icon: MessageCircle },
   { to: "/navigateurs", label: "Fenêtres", icon: Globe2 },
   { to: "/produits", label: "Produits", icon: Boxes },
+  { to: "/retouche", label: "Retouche", icon: Wand2 },
 ] as const;
 
 export function AppShell({ children }: { children: ReactNode }) {
