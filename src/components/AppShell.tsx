@@ -9,6 +9,7 @@ import {
   LogOut,
   MessageCircle,
   UserPlus,
+  Wand2,
   X,
 } from "lucide-react";
 
