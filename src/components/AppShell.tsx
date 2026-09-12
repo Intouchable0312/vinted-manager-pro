@@ -7,6 +7,7 @@ import {
   Globe2,
   LayoutDashboard,
   LogOut,
+  Mail,
   MessageCircle,
   UserPlus,
   X,
