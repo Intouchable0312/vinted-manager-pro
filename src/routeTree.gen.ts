@@ -14,8 +14,6 @@ import { Route as AccueilRouteImport } from './routes/accueil'
 import { Route as MessagerieRouteImport } from './routes/messagerie'
 import { Route as NavigateursRouteImport } from './routes/navigateurs'
 import { Route as ProduitsRouteImport } from './routes/produits'
-import { Route as RetoucheRouteImport } from './routes/retouche'
-import { Route as ApiEditImageRouteImport } from './routes/api/edit-image'
 import { Route as ApiPublicProxyRouteImport } from './routes/api/public/proxy'
 
 const IndexRoute = IndexRouteImport.update({
@@ -43,16 +41,6 @@ const ProduitsRoute = ProduitsRouteImport.update({
   path: '/produits',
   getParentRoute: () => rootRouteImport,
 } as any)
-const RetoucheRoute = RetoucheRouteImport.update({
-  id: '/retouche',
-  path: '/retouche',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ApiEditImageRoute = ApiEditImageRouteImport.update({
-  id: '/api/edit-image',
-  path: '/api/edit-image',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const ApiPublicProxyRoute = ApiPublicProxyRouteImport.update({
   id: '/api/public/proxy',
   path: '/api/public/proxy',
@@ -65,8 +53,6 @@ export interface FileRoutesByFullPath {
   '/messagerie': typeof MessagerieRoute
   '/navigateurs': typeof NavigateursRoute
   '/produits': typeof ProduitsRoute
-  '/retouche': typeof RetoucheRoute
-  '/api/edit-image': typeof ApiEditImageRoute
   '/api/public/proxy': typeof ApiPublicProxyRoute
 }
 export interface FileRoutesByTo {
@@ -75,8 +61,6 @@ export interface FileRoutesByTo {
   '/messagerie': typeof MessagerieRoute
   '/navigateurs': typeof NavigateursRoute
   '/produits': typeof ProduitsRoute
-  '/retouche': typeof RetoucheRoute
-  '/api/edit-image': typeof ApiEditImageRoute
   '/api/public/proxy': typeof ApiPublicProxyRoute
 }
 export interface FileRoutesById {
@@ -86,8 +70,6 @@ export interface FileRoutesById {
   '/messagerie': typeof MessagerieRoute
   '/navigateurs': typeof NavigateursRoute
   '/produits': typeof ProduitsRoute
-  '/retouche': typeof RetoucheRoute
-  '/api/edit-image': typeof ApiEditImageRoute
   '/api/public/proxy': typeof ApiPublicProxyRoute
 }
 export interface FileRouteTypes {
@@ -98,8 +80,6 @@ export interface FileRouteTypes {
     | '/messagerie'
     | '/navigateurs'
     | '/produits'
-    | '/retouche'
-    | '/api/edit-image'
     | '/api/public/proxy'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -108,8 +88,6 @@ export interface FileRouteTypes {
     | '/messagerie'
     | '/navigateurs'
     | '/produits'
-    | '/retouche'
-    | '/api/edit-image'
     | '/api/public/proxy'
   id:
     | '__root__'
@@ -118,8 +96,6 @@ export interface FileRouteTypes {
     | '/messagerie'
     | '/navigateurs'
     | '/produits'
-    | '/retouche'
-    | '/api/edit-image'
     | '/api/public/proxy'
   fileRoutesById: FileRoutesById
 }
@@ -129,8 +105,6 @@ export interface RootRouteChildren {
   MessagerieRoute: typeof MessagerieRoute
   NavigateursRoute: typeof NavigateursRoute
   ProduitsRoute: typeof ProduitsRoute
-  RetoucheRoute: typeof RetoucheRoute
-  ApiEditImageRoute: typeof ApiEditImageRoute
   ApiPublicProxyRoute: typeof ApiPublicProxyRoute
 }
 
@@ -171,20 +145,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProduitsRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/retouche': {
-      id: '/retouche'
-      path: '/retouche'
-      fullPath: '/retouche'
-      preLoaderRoute: typeof RetoucheRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/api/edit-image': {
-      id: '/api/edit-image'
-      path: '/api/edit-image'
-      fullPath: '/api/edit-image'
-      preLoaderRoute: typeof ApiEditImageRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/api/public/proxy': {
       id: '/api/public/proxy'
       path: '/api/public/proxy'
@@ -201,8 +161,6 @@ const rootRouteChildren: RootRouteChildren = {
   MessagerieRoute: MessagerieRoute,
   NavigateursRoute: NavigateursRoute,
   ProduitsRoute: ProduitsRoute,
-  RetoucheRoute: RetoucheRoute,
-  ApiEditImageRoute: ApiEditImageRoute,
   ApiPublicProxyRoute: ApiPublicProxyRoute,
 }
 export const routeTree = rootRouteImport
