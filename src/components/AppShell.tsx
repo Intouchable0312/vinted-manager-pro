@@ -20,6 +20,7 @@ import { useSession } from "@/lib/session";
 const TABS = [
   { to: "/accueil", label: "Accueil", icon: LayoutDashboard },
   { to: "/messagerie", label: "Messagerie", icon: MessageCircle },
+  { to: "/emails", label: "E-mails", icon: Mail },
   { to: "/navigateurs", label: "Fenêtres", icon: Globe2 },
   { to: "/produits", label: "Produits", icon: Boxes },
 ] as const;

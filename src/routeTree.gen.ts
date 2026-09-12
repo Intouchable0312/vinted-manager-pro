@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AccueilRouteImport } from './routes/accueil'
+import { Route as EmailsRouteImport } from './routes/emails'
 import { Route as MessagerieRouteImport } from './routes/messagerie'
 import { Route as NavigateursRouteImport } from './routes/navigateurs'
 import { Route as ProduitsRouteImport } from './routes/produits'
@@ -24,6 +25,11 @@ const IndexRoute = IndexRouteImport.update({
 const AccueilRoute = AccueilRouteImport.update({
   id: '/accueil',
   path: '/accueil',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EmailsRoute = EmailsRouteImport.update({
+  id: '/emails',
+  path: '/emails',
   getParentRoute: () => rootRouteImport,
 } as any)
 const MessagerieRoute = MessagerieRouteImport.update({
@@ -50,6 +56,7 @@ const ApiPublicProxyRoute = ApiPublicProxyRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/accueil': typeof AccueilRoute
+  '/emails': typeof EmailsRoute
   '/messagerie': typeof MessagerieRoute
   '/navigateurs': typeof NavigateursRoute
   '/produits': typeof ProduitsRoute
@@ -58,6 +65,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/accueil': typeof AccueilRoute
+  '/emails': typeof EmailsRoute
   '/messagerie': typeof MessagerieRoute
   '/navigateurs': typeof NavigateursRoute
   '/produits': typeof ProduitsRoute
@@ -67,6 +75,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/accueil': typeof AccueilRoute
+  '/emails': typeof EmailsRoute
   '/messagerie': typeof MessagerieRoute
   '/navigateurs': typeof NavigateursRoute
   '/produits': typeof ProduitsRoute
@@ -77,6 +86,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/accueil'
+    | '/emails'
     | '/messagerie'
     | '/navigateurs'
     | '/produits'
@@ -85,6 +95,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/accueil'
+    | '/emails'
     | '/messagerie'
     | '/navigateurs'
     | '/produits'
@@ -93,6 +104,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/accueil'
+    | '/emails'
     | '/messagerie'
     | '/navigateurs'
     | '/produits'
@@ -102,6 +114,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AccueilRoute: typeof AccueilRoute
+  EmailsRoute: typeof EmailsRoute
   MessagerieRoute: typeof MessagerieRoute
   NavigateursRoute: typeof NavigateursRoute
   ProduitsRoute: typeof ProduitsRoute
@@ -122,6 +135,13 @@ declare module '@tanstack/react-router' {
       path: '/accueil'
       fullPath: '/accueil'
       preLoaderRoute: typeof AccueilRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/emails': {
+      id: '/emails'
+      path: '/emails'
+      fullPath: '/emails'
+      preLoaderRoute: typeof EmailsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/messagerie': {
@@ -158,6 +178,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AccueilRoute: AccueilRoute,
+  EmailsRoute: EmailsRoute,
   MessagerieRoute: MessagerieRoute,
   NavigateursRoute: NavigateursRoute,
   ProduitsRoute: ProduitsRoute,
