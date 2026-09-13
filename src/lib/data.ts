@@ -98,8 +98,19 @@ export function hostOf(url: string): string {
   }
 }
 
-export function proxyUrl(url: string): string {
-  return `/api/public/proxy?url=${encodeURIComponent(url)}`;
+/**
+ * Fenêtre interne : chaque fenêtre a son propre identifiant, ce qui isole
+ * complètement ses cookies (donc ses connexions) des autres fenêtres.
+ */
+export function proxyUrl(url: string, sessionId = "default"): string {
+  try {
+    const parsed = new URL(url.startsWith("http") ? url : `https://${url}`);
+    const scheme = parsed.protocol === "http:" ? "http" : "https";
+    const sid = sessionId.replace(/[^a-zA-Z0-9_-]/g, "") || "default";
+    return `/api/public/px/${sid}/${scheme}/${parsed.host}${parsed.pathname}${parsed.search}`;
+  } catch {
+    return `/api/public/px/default/https/${url}`;
+  }
 }
 
 /** Extrait la première URL trouvée dans un message. */

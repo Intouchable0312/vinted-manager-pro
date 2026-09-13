@@ -5,6 +5,7 @@ import { useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
 import {
   ArrowLeftRight,
+  ExternalLink,
   Globe2,
   Maximize2,
   Plus,
@@ -208,9 +209,14 @@ function BrowserWindow({ window: target, onClose }: { window: OpenWindow; onClos
   const [nonce, setNonce] = useState(0);
   const [expanded, setExpanded] = useState(false);
 
+  const sid = useMemo(
+    () => `w${target.key.replace(/[^a-zA-Z0-9_-]/g, "")}`.slice(0, 48),
+    [target.key],
+  );
+
   const src = useMemo(
-    () => (mode === "internal" ? proxyUrl(target.url) : target.url),
-    [mode, target.url],
+    () => (mode === "internal" ? proxyUrl(target.url, sid) : target.url),
+    [mode, target.url, sid],
   );
 
   return (
@@ -247,6 +253,16 @@ function BrowserWindow({ window: target, onClose }: { window: OpenWindow; onClos
           >
             <ArrowLeftRight className="h-4 w-4" />
           </button>
+          <a
+            href={target.url}
+            target="_blank"
+            rel="noreferrer"
+            className="text-muted-foreground hover:text-foreground rounded-xl p-2 transition-colors"
+            aria-label="Ouvrir dans un onglet"
+            title="Ouvrir dans un onglet"
+          >
+            <ExternalLink className="h-4 w-4" />
+          </a>
           <button
             onClick={() => setNonce((value) => value + 1)}
             className="text-muted-foreground hover:text-foreground rounded-xl p-2 transition-colors"
@@ -276,7 +292,8 @@ function BrowserWindow({ window: target, onClose }: { window: OpenWindow; onClos
           title={target.label}
           className="bg-background h-full w-full flex-1"
           referrerPolicy="no-referrer"
-          sandbox="allow-scripts allow-forms allow-popups allow-modals"
+          allow="camera; microphone; clipboard-read; clipboard-write"
+          sandbox="allow-scripts allow-forms allow-popups allow-modals allow-same-origin allow-storage-access-by-user-activation"
         />
       </motion.div>
     </motion.div>
