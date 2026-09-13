@@ -253,6 +253,16 @@ function BrowserWindow({ window: target, onClose }: { window: OpenWindow; onClos
           >
             <ArrowLeftRight className="h-4 w-4" />
           </button>
+          <a
+            href={target.url}
+            target="_blank"
+            rel="noreferrer"
+            className="text-muted-foreground hover:text-foreground rounded-xl p-2 transition-colors"
+            aria-label="Ouvrir dans un onglet"
+            title="Ouvrir dans un onglet"
+          >
+            <ExternalLink className="h-4 w-4" />
+          </a>
           <button
             onClick={() => setNonce((value) => value + 1)}
             className="text-muted-foreground hover:text-foreground rounded-xl p-2 transition-colors"
