@@ -281,7 +281,8 @@ function BrowserWindow({ window: target, onClose }: { window: OpenWindow; onClos
           title={target.label}
           className="bg-background h-full w-full flex-1"
           referrerPolicy="no-referrer"
-          sandbox="allow-scripts allow-forms allow-popups allow-modals"
+          allow="camera; microphone; clipboard-read; clipboard-write"
+          sandbox="allow-scripts allow-forms allow-popups allow-modals allow-same-origin allow-storage-access-by-user-activation"
         />
       </motion.div>
     </motion.div>
