@@ -5,6 +5,7 @@ import { useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
 import {
   ArrowLeftRight,
+  ExternalLink,
   Globe2,
   Maximize2,
   Plus,
