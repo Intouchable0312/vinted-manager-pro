@@ -208,9 +208,14 @@ function BrowserWindow({ window: target, onClose }: { window: OpenWindow; onClos
   const [nonce, setNonce] = useState(0);
   const [expanded, setExpanded] = useState(false);
 
+  const sid = useMemo(
+    () => `w${target.key.replace(/[^a-zA-Z0-9_-]/g, "")}`.slice(0, 48),
+    [target.key],
+  );
+
   const src = useMemo(
-    () => (mode === "internal" ? proxyUrl(target.url) : target.url),
-    [mode, target.url],
+    () => (mode === "internal" ? proxyUrl(target.url, sid) : target.url),
+    [mode, target.url, sid],
   );
 
   return (
